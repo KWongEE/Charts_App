@@ -16,8 +16,6 @@ function SheetJSImportDirective() {
           /* read workbook */
           var bstr = e.target.result;
           var workbook = XLSX.read(bstr, {type:'binary'});
-          console.log('Potato')
-          debugger;
           /* DO SOMETHING WITH workbook HERE */
         };
 
