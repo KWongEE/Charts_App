@@ -5,7 +5,6 @@ angular.module('myApp.version.version-directive', [])
 .directive("importSheetJs", [SheetJSImportDirective]);
 
 function SheetJSImportDirective() {
-  debugger;
   return {
     scope: { opts: '=' },
     link: function ($scope, $elm) {
@@ -16,11 +15,18 @@ function SheetJSImportDirective() {
           /* read workbook */
           var bstr = e.target.result;
           var workbook = XLSX.read(bstr, {type:'binary'});
-          console.log('Potato')
-          debugger;
-          /* DO SOMETHING WITH workbook HERE */
+          var sheet_name_list = workbook.SheetNames;
+          var airlines = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]])
+          var dictionary = {};
+          airlines.forEach(function(element){
+            if (dictionary[element["Airline Name"]] == null){
+              dictionary[element["Airline Name"]] = [element];
+            } else {
+              dictionary[element["Airline Name"]].push(element);
+            }
+            console.log(dictionary)
+          })
         };
-
         reader.readAsBinaryString(changeEvent.target.files[0]);
       });
     }
